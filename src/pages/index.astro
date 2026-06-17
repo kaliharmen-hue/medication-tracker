@@ -21,6 +21,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   <form id="dailyForm" class="daily-form"></form>
 
+  <section class="copy-panel" aria-labelledby="copyTitle">
+    <div>
+      <h2 id="copyTitle">ChatGPT analysis copy</h2>
+      <p>Copies the selected day plus recent entries with a prompt for cautious pattern notes and questions to raise with the doctor.</p>
+    </div>
+    <button class="button" id="copyChatGpt" type="button">Copy for ChatGPT</button>
+    <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+    <textarea id="copyFallback" class="copy-fallback" readonly hidden></textarea>
+  </section>
+
   <section class="quiet-panel" id="syncPanel">
     <h2>Shared saving</h2>
     <p id="syncText">Checking save setup...</p>

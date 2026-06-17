@@ -1,12 +1,15 @@
 import { sections, todayString, createEntryId, mergeEntry, type DailyEntry } from "./schema";
-import { renderField } from "./render";
-import { getEntry, saveEntry, storageMode } from "./storage";
+import { entriesToChatGptPrompt, renderField } from "./render";
+import { getAllEntries, getEntry, saveEntry, storageMode } from "./storage";
 
 const form = document.querySelector<HTMLFormElement>("#dailyForm")!;
 const dateInput = document.querySelector<HTMLInputElement>("#dateInput")!;
 const saveState = document.querySelector<HTMLElement>("#saveState")!;
 const syncText = document.querySelector<HTMLElement>("#syncText")!;
 const exportLink = document.querySelector<HTMLAnchorElement>("#exportLink")!;
+const copyChatGpt = document.querySelector<HTMLButtonElement>("#copyChatGpt")!;
+const copyStatus = document.querySelector<HTMLElement>("#copyStatus")!;
+const copyFallback = document.querySelector<HTMLTextAreaElement>("#copyFallback")!;
 const base = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 
 let currentEntry: DailyEntry;
@@ -24,6 +27,7 @@ dateInput.addEventListener("change", loadEntry);
 
 form.addEventListener("input", scheduleSave);
 form.addEventListener("change", scheduleSave);
+copyChatGpt.addEventListener("click", copyForChatGpt);
 
 async function loadEntry() {
   currentEntry = await getEntry(dateInput.value);
@@ -57,6 +61,40 @@ async function saveNow() {
   saveState.textContent = `Saved ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
 }
 
+async function copyForChatGpt() {
+  window.clearTimeout(saveTimer);
+  copyChatGpt.disabled = true;
+  copyStatus.textContent = "Preparing copy...";
+
+  try {
+    await saveNow();
+    const allEntries = await getAllEntries();
+    const selectedDate = dateInput.value;
+    const recentEntries = allEntries
+      .filter((entry) => entry.date <= selectedDate)
+      .slice(0, 30);
+    const selectedEntry = allEntries.find((entry) => entry.date === selectedDate);
+    const entries = selectedEntry && !recentEntries.some((entry) => entry.date === selectedDate)
+      ? [selectedEntry, ...recentEntries]
+      : recentEntries;
+    const text = entriesToChatGptPrompt(entries.length ? entries : [currentEntry], selectedDate);
+
+    await copyText(text);
+    copyStatus.textContent = "Copied. Paste it into ChatGPT when you are ready.";
+    copyFallback.hidden = true;
+  } catch {
+    const allEntries = await getAllEntries();
+    const entries = allEntries.filter((entry) => entry.date <= dateInput.value).slice(0, 30);
+    const text = entriesToChatGptPrompt(entries.length ? entries : [currentEntry], dateInput.value);
+    copyFallback.hidden = false;
+    copyFallback.value = text;
+    copyFallback.select();
+    copyStatus.textContent = "Copy was blocked here, so the text is selected below for manual copy.";
+  } finally {
+    copyChatGpt.disabled = false;
+  }
+}
+
 function collectEntry(): DailyEntry {
   const next = mergeEntry(currentEntry, dateInput.value);
   next.id = createEntryId(next.date);
@@ -81,4 +119,17 @@ function collectEntry(): DailyEntry {
 
 function updateExportLink() {
   exportLink.href = `${base}export/?date=${encodeURIComponent(dateInput.value)}`;
+}
+
+async function copyText(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return;
+  } catch {
+    if (navigator.share) {
+      await navigator.share({ text });
+      return;
+    }
+    throw new Error("No clipboard or share support");
+  }
 }

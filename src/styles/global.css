@@ -233,6 +233,7 @@ textarea {
 fieldset,
 .quiet-panel,
 .preview-panel,
+.copy-panel,
 .day-card,
 .insight-card {
   border: 1px solid var(--line);
@@ -309,14 +310,40 @@ output {
 }
 
 .quiet-panel,
-.preview-panel {
+.preview-panel,
+.copy-panel {
   margin-top: 18px;
   padding: 18px;
 }
 
-.quiet-panel p {
+.quiet-panel p,
+.copy-panel p {
   color: var(--muted);
   margin-bottom: 0;
+}
+
+.copy-panel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.copy-panel h2 {
+  margin-bottom: 6px;
+}
+
+.copy-status {
+  grid-column: 1 / -1;
+  min-height: 1.4em;
+  font-weight: 700;
+}
+
+.copy-fallback {
+  grid-column: 1 / -1;
+  min-height: 220px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height: 1.45;
 }
 
 .history-grid,
@@ -368,6 +395,17 @@ output {
   line-height: 1.45;
 }
 
+.insight-card.wide {
+  grid-column: 1 / -1;
+}
+
+.insight-card ul {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .panel-title {
   display: flex;
   align-items: center;
@@ -412,5 +450,9 @@ output {
 
   .save-state {
     width: 100%;
+  }
+
+  .copy-panel {
+    grid-template-columns: 1fr;
   }
 }

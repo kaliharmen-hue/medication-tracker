@@ -109,6 +109,28 @@ export function entriesToMarkdown(entries: DailyEntry[], title: string) {
   return [`# ${title}`, "", ...entries.map(entryToMarkdown)].join("\n---\n");
 }
 
+export function entriesToChatGptPrompt(entries: DailyEntry[], selectedDate: string) {
+  const title = `Medication tracker export for ChatGPT analysis`;
+  const scope = entries.length === 1 ? "1 saved entry" : `${entries.length} saved entries`;
+  return [
+    `# ${title}`,
+    "",
+    `Selected date: ${selectedDate}`,
+    `Included data: ${scope}`,
+    "",
+    "Please review this medication tracker data cautiously.",
+    "",
+    "What I need back:",
+    "- Plain-English patterns worth noticing",
+    "- Possible links between sleep, grogginess, mood, anxiety, episodes, appetite, and side effects",
+    "- Anything that may be useful to mention to a GP/prescriber",
+    "- Questions to ask the doctor",
+    "- Please avoid diagnosis or certainty; use careful language like 'may be worth watching'",
+    "",
+    entriesToMarkdown(entries, "Tracker entries")
+  ].join("\n");
+}
+
 export function entriesToCsv(entries: DailyEntry[]) {
   const fields = ["date", ...sections.flatMap((section) => section.fields.map((field) => String(field.id))), "updatedAt"];
   const rows = [fields.join(",")];
