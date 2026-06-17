@@ -23,6 +23,8 @@ function renderInsights(entries: DailyEntry[]) {
     averageCard("Morning grogginess", entries.map((entry) => entry.morningGrogginess), "Higher scores may be worth comparing with dose time and sleep quality."),
     averageCard("Mood", entries.map((entry) => entry.mood), trendNote(entries, "mood", "mood")),
     averageCard("Anxiety / agitation", entries.map((entry) => entry.anxietyAgitation), trendNote(entries, "anxietyAgitation", "anxiety / agitation")),
+    averageCard("Tattoo concentration", entries.filter((entry) => entry.tattooingToday && entry.tattooingToday !== "No").map((entry) => entry.tattooConcentration), "Only includes days marked as tattooing days."),
+    countCard("Tattooing days", String(entries.filter((entry) => entry.tattooingToday && entry.tattooingToday !== "No").length), "Days where tattooing time was logged."),
     countCard("Episode days", String(entries.filter((entry) => entry.episodeToday === "Yes").length), "Days where an episode was recorded."),
     countCard("Side effects to mention", commonSideEffects || "None repeated", "Most repeated side effects in the recent entries."),
     countCard("Moderate/severe side effects", String(entries.filter((entry) => ["Moderate", "Severe"].includes(entry.sideEffectSeverity)).length), "Persistent or severe side effects are worth raising with the prescriber."),
@@ -93,6 +95,8 @@ function buildDoctorNotes(entries: DailyEntry[], commonSideEffects: string) {
 
   notes.push(`Recent window covers ${entries.length} saved check-ins from ${formatDate(entries[entries.length - 1].date)} to ${formatDate(entries[0].date)}.`);
   if (lateOrMissed) notes.push(`${lateOrMissed} day(s) were logged as missed or late medication.`);
+  const tattooDays = entries.filter((entry) => entry.tattooingToday && entry.tattooingToday !== "No").length;
+  if (tattooDays) notes.push(`${tattooDays} day(s) included tattooing; concentration scores may help track work functioning.`);
   if (episodeDays) notes.push(`${episodeDays} day(s) included an episode; compare these with sleep, anxiety, and side-effect notes.`);
   if (moderateSevereSideEffects) notes.push(`${moderateSevereSideEffects} entry/entries had moderate or severe side effects.`);
   if (commonSideEffects) notes.push(`Repeated side effects: ${commonSideEffects}.`);

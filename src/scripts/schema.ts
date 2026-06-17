@@ -29,6 +29,7 @@ export interface DailyEntry {
   daytimeEnergy: number | "";
   mood: number | "";
   anxietyAgitation: number | "";
+  tattooingToday: string;
   tattooConcentration: number | "";
   episodeToday: string;
   episodeSeverity: string;
@@ -71,7 +72,8 @@ export const sections: SectionDefinition[] = [
       { id: "daytimeEnergy", label: "Daytime energy", type: "score", min: 0, max: 10 },
       { id: "mood", label: "Mood", type: "score", min: 0, max: 10 },
       { id: "anxietyAgitation", label: "Anxiety / agitation", type: "score", min: 0, max: 10 },
-      { id: "tattooConcentration", label: "Concentration for tattooing", type: "score", min: 0, max: 10, optionalLabel: "Not tattooing today" }
+      { id: "tattooingToday", label: "Tattooing today?", type: "select", options: ["No", "Yes, 1-2 hours", "Yes, 3-4 hours", "Yes, 4+ hours"] },
+      { id: "tattooConcentration", label: "Concentration for tattooing", type: "score", min: 0, max: 10 }
     ]
   },
   {
@@ -139,6 +141,7 @@ export function createEmptyEntry(date = todayString()): DailyEntry {
     daytimeEnergy: "",
     mood: "",
     anxietyAgitation: "",
+    tattooingToday: "",
     tattooConcentration: "",
     episodeToday: "No",
     episodeSeverity: "",

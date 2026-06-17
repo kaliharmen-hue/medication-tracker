@@ -36,6 +36,7 @@ function entryCard(entry: DailyEntry) {
     entry.sleepQuality !== "" && `Sleep ${entry.sleepQuality}/10`,
     entry.mood !== "" && `Mood ${entry.mood}/10`,
     entry.anxietyAgitation !== "" && `Anxiety ${entry.anxietyAgitation}/10`,
+    entry.tattooingToday && `Tattooing: ${entry.tattooingToday}`,
     entry.episodeToday === "Yes" && `Episode: ${entry.episodeSeverity || "Yes"}`,
     entry.sideEffectSeverity && `Side effects: ${entry.sideEffectSeverity}`,
     entry.warningSigns === "Yes" && "Safety flag"
