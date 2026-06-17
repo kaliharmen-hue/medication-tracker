@@ -21,6 +21,12 @@ service cloud.firestore {
     match /dailyEntries/{entryId} {
       allow read, write: if request.auth != null;
     }
+    match /medicationMeta/{docId} {
+      allow read, write: if request.auth != null;
+    }
+    match /medicationChanges/{changeId} {
+      allow read, write: if request.auth != null;
+    }
   }
 }
 ```

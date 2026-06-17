@@ -352,6 +352,17 @@ output {
   gap: 14px;
 }
 
+.medication-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.medication-form {
+  min-width: 0;
+}
+
 .day-card,
 .insight-card {
   padding: 18px;
@@ -453,6 +464,10 @@ output {
   }
 
   .copy-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .medication-layout {
     grid-template-columns: 1fr;
   }
 }

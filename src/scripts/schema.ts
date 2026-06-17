@@ -16,6 +16,29 @@ export interface SectionDefinition {
   fields: FieldDefinition[];
 }
 
+export interface MedicationSetup {
+  id: "setup";
+  medicationName: string;
+  currentDose: string;
+  dateStarted: string;
+  usualTimeTaken: string;
+  reasonForStarting: string[];
+  notes: string;
+  updatedAt: string;
+}
+
+export interface MedicationChange {
+  id: string;
+  date: string;
+  medicationName: string;
+  dose: string;
+  timeUsuallyTaken: string;
+  changeType: string;
+  reason: string;
+  notes: string;
+  updatedAt: string;
+}
+
 export interface DailyEntry {
   id: string;
   date: string;
@@ -127,6 +150,23 @@ export function createEntryId(date: string) {
   return date;
 }
 
+export function createMedicationChangeId(date: string) {
+  return `${date}_${Date.now()}`;
+}
+
+export function createEmptyMedicationSetup(): MedicationSetup {
+  return {
+    id: "setup",
+    medicationName: "Mirtazapine",
+    currentDose: "15mg",
+    dateStarted: "",
+    usualTimeTaken: "",
+    reasonForStarting: [],
+    notes: "",
+    updatedAt: new Date().toISOString()
+  };
+}
+
 export function createEmptyEntry(date = todayString()): DailyEntry {
   return {
     id: createEntryId(date),
@@ -163,5 +203,11 @@ export function mergeEntry(saved: Partial<DailyEntry> | null | undefined, date: 
   const merged = { ...empty, ...saved, date, id: createEntryId(date) };
   merged.sideEffects = Array.isArray(merged.sideEffects) ? merged.sideEffects : [];
   merged.warningDetails = Array.isArray(merged.warningDetails) ? merged.warningDetails : [];
+  return merged;
+}
+
+export function mergeMedicationSetup(saved: Partial<MedicationSetup> | null | undefined): MedicationSetup {
+  const merged = { ...createEmptyMedicationSetup(), ...saved, id: "setup" as const };
+  merged.reasonForStarting = Array.isArray(merged.reasonForStarting) ? merged.reasonForStarting : [];
   return merged;
 }

@@ -6,6 +6,7 @@ A warm, low-friction medication tracker for daily Mirtazapine check-ins.
 
 - Autosaves the daily check-in.
 - Keeps one entry per date.
+- Tracks current medication setup and dated medication changes.
 - Includes a separate Kali notes field.
 - Shows recent history and cautious pattern notes.
 - Exports Markdown, CSV, and JSON backups.

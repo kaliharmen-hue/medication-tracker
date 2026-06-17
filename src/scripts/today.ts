@@ -1,6 +1,6 @@
 import { sections, todayString, createEntryId, mergeEntry, type DailyEntry } from "./schema";
 import { entriesToChatGptPrompt, renderField } from "./render";
-import { getEntry, saveEntry, storageMode } from "./storage";
+import { getEntry, getMedicationChanges, getMedicationSetup, saveEntry, storageMode } from "./storage";
 
 const form = document.querySelector<HTMLFormElement>("#dailyForm")!;
 const dateInput = document.querySelector<HTMLInputElement>("#dateInput")!;
@@ -70,7 +70,8 @@ async function copyForChatGpt() {
   try {
     await saveNow();
     const selectedDate = dateInput.value;
-    text = entriesToChatGptPrompt([currentEntry], `Selected day: ${selectedDate}`);
+    const [medicationSetup, medicationChanges] = await Promise.all([getMedicationSetup(), getMedicationChanges()]);
+    text = entriesToChatGptPrompt([currentEntry], `Selected day: ${selectedDate}`, medicationSetup, medicationChanges);
 
     await copyText(text);
     copyStatus.textContent = "Copied. Paste it into ChatGPT when you are ready.";

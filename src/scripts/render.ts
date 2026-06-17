@@ -1,4 +1,4 @@
-import { sections, type DailyEntry, type FieldDefinition } from "./schema";
+import { sections, type DailyEntry, type FieldDefinition, type MedicationChange, type MedicationSetup } from "./schema";
 
 export function renderField(field: FieldDefinition, entry: DailyEntry) {
   const value = entry[field.id] as string | number | string[];
@@ -109,7 +109,12 @@ export function entriesToMarkdown(entries: DailyEntry[], title: string) {
   return [`# ${title}`, "", ...entries.map(entryToMarkdown)].join("\n---\n");
 }
 
-export function entriesToChatGptPrompt(entries: DailyEntry[], selectedDate: string) {
+export function entriesToChatGptPrompt(
+  entries: DailyEntry[],
+  selectedDate: string,
+  medicationSetup?: MedicationSetup,
+  medicationChanges: MedicationChange[] = []
+) {
   const title = entries.length === 1
     ? `Medication tracker day export for ChatGPT`
     : `Medication tracker trend export for ChatGPT`;
@@ -130,8 +135,31 @@ export function entriesToChatGptPrompt(entries: DailyEntry[], selectedDate: stri
     "- Questions to ask the doctor",
     "- Please avoid diagnosis or certainty; use careful language like 'may be worth watching'",
     "",
+    medicationToMarkdown(medicationSetup, medicationChanges),
+    "",
     entriesToMarkdown(entries, "Tracker entries")
   ].join("\n");
+}
+
+export function medicationToMarkdown(setup?: MedicationSetup, changes: MedicationChange[] = []) {
+  if (!setup && !changes.length) return "## Medication context\n\nNo medication setup or change history saved yet.";
+  const lines = ["## Medication context", ""];
+  if (setup) {
+    lines.push(`- Current medication: ${setup.medicationName || "Not set"}`);
+    lines.push(`- Current dose: ${setup.currentDose || "Not set"}`);
+    lines.push(`- Date started: ${setup.dateStarted || "Not set"}`);
+    lines.push(`- Usual time taken: ${setup.usualTimeTaken || "Not set"}`);
+    lines.push(`- Reason for starting: ${setup.reasonForStarting.length ? setup.reasonForStarting.join(", ") : "Not set"}`);
+    if (setup.notes) lines.push(`- Medication notes: ${setup.notes}`);
+    lines.push("");
+  }
+  if (changes.length) {
+    lines.push("### Medication change history");
+    changes.forEach((change) => {
+      lines.push(`- ${change.date}: ${change.changeType || "Change"}; ${change.medicationName || "Medication not set"}; ${change.dose || "Dose not set"}; reason: ${change.reason || "Not set"}${change.notes ? `; notes: ${change.notes}` : ""}`);
+    });
+  }
+  return lines.join("\n");
 }
 
 export function entriesToCsv(entries: DailyEntry[]) {

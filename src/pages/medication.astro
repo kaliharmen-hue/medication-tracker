@@ -1,0 +1,113 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+  <section class="page-head">
+    <div>
+      <p class="eyebrow">Medication</p>
+      <h1>Medication changes</h1>
+      <p class="lede">Keep the daily check-in simple, and log medication or dose changes here when they happen.</p>
+    </div>
+    <div class="save-state" id="medicationSaveState">Autosaves as I go</div>
+  </section>
+
+  <section class="medication-layout">
+    <form class="medication-form" id="setupForm">
+      <fieldset>
+        <legend>Current setup</legend>
+        <div class="field">
+          <label for="medicationName">Medication name</label>
+          <input id="medicationName" name="medicationName" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="currentDose">Current dose</label>
+          <select id="currentDose" name="currentDose">
+            <option value="">Not set</option>
+            <option>7.5mg</option>
+            <option>15mg</option>
+            <option>30mg</option>
+            <option>45mg</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="dateStarted">Date started</label>
+          <input id="dateStarted" name="dateStarted" type="date" />
+        </div>
+        <div class="field">
+          <label for="usualTimeTaken">Usual time taken</label>
+          <input id="usualTimeTaken" name="usualTimeTaken" type="time" />
+        </div>
+        <div class="field">
+          <label>Reason for starting</label>
+          <div class="chip-group" id="reasonForStarting"></div>
+        </div>
+        <div class="field">
+          <label for="setupNotes">Notes</label>
+          <textarea id="setupNotes" name="notes" rows="3"></textarea>
+        </div>
+      </fieldset>
+    </form>
+
+    <form class="medication-form" id="changeForm">
+      <fieldset>
+        <legend>Add change</legend>
+        <div class="field">
+          <label for="changeDate">Date of change</label>
+          <input id="changeDate" name="date" type="date" />
+        </div>
+        <div class="field">
+          <label for="changeMedicationName">Medication</label>
+          <input id="changeMedicationName" name="medicationName" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="changeDose">Dose</label>
+          <select id="changeDose" name="dose">
+            <option value="">Not set</option>
+            <option>7.5mg</option>
+            <option>15mg</option>
+            <option>30mg</option>
+            <option>45mg</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="changeTime">Usual time taken</label>
+          <input id="changeTime" name="timeUsuallyTaken" type="time" />
+        </div>
+        <div class="field">
+          <label for="changeType">Change type</label>
+          <select id="changeType" name="changeType">
+            <option value="">Not set</option>
+            <option>Started medication</option>
+            <option>Increased dose</option>
+            <option>Reduced dose</option>
+            <option>Stopped medication</option>
+            <option>Switched medication</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="changeReason">Reason</label>
+          <select id="changeReason" name="reason">
+            <option value="">Not set</option>
+            <option>Starting medication</option>
+            <option>Changed by prescriber</option>
+            <option>Side effects</option>
+            <option>Not helping enough</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="changeNotes">Notes</label>
+          <textarea id="changeNotes" name="notes" rows="3"></textarea>
+        </div>
+        <button class="button" type="submit">Add medication change</button>
+      </fieldset>
+    </form>
+  </section>
+
+  <section class="history-grid" id="changeHistory" aria-live="polite"></section>
+</BaseLayout>
+<script>
+  import "../scripts/medication.ts";
+</script>
