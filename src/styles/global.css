@@ -470,4 +470,43 @@ output {
   .medication-layout {
     grid-template-columns: 1fr;
   }
+
+  .insight-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .insight-card {
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .insight-card h2 {
+    margin-bottom: 8px;
+    font-size: 0.98rem;
+    line-height: 1.12;
+  }
+
+  .insight-card strong {
+    margin: 6px 0;
+    font-size: 1.42rem;
+    line-height: 1.08;
+    overflow-wrap: anywhere;
+  }
+
+  .insight-card p,
+  .insight-card li {
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .insight-card.wide {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 340px) {
+  .insight-board {
+    grid-template-columns: 1fr;
+  }
 }
