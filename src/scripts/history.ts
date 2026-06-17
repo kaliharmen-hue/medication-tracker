@@ -45,7 +45,6 @@ function entryCard(entry: DailyEntry) {
     <section class="history-entry">
       <div class="tag-row">${flags.map((flag) => `<span>${flag}</span>`).join("") || "<span>No fields filled yet</span>"}</div>
       ${entry.oneLineNote ? `<p>${escapeHtml(entry.oneLineNote)}</p>` : ""}
-      ${entry.kaliNotes ? `<p><strong>Kali notes:</strong> ${escapeHtml(entry.kaliNotes)}</p>` : ""}
     </section>
   `;
 }

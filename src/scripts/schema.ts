@@ -64,7 +64,6 @@ export interface DailyEntry {
   warningDetails: string[];
   warningNote: string;
   oneLineNote: string;
-  kaliNotes: string;
   updatedAt: string;
 }
 
@@ -136,8 +135,7 @@ export const sections: SectionDefinition[] = [
     id: "note",
     title: "Notes",
     fields: [
-      { id: "oneLineNote", label: "Anything important today?", type: "textarea" },
-      { id: "kaliNotes", label: "Kali notes", type: "textarea" }
+      { id: "oneLineNote", label: "Anything important today?", type: "textarea" }
     ]
   }
 ];
@@ -193,7 +191,6 @@ export function createEmptyEntry(date = todayString()): DailyEntry {
     warningDetails: [],
     warningNote: "",
     oneLineNote: "",
-    kaliNotes: "",
     updatedAt: new Date().toISOString()
   };
 }
