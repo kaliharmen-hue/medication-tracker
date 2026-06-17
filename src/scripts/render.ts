@@ -110,12 +110,14 @@ export function entriesToMarkdown(entries: DailyEntry[], title: string) {
 }
 
 export function entriesToChatGptPrompt(entries: DailyEntry[], selectedDate: string) {
-  const title = `Medication tracker export for ChatGPT analysis`;
+  const title = entries.length === 1
+    ? `Medication tracker day export for ChatGPT`
+    : `Medication tracker trend export for ChatGPT`;
   const scope = entries.length === 1 ? "1 saved entry" : `${entries.length} saved entries`;
   return [
     `# ${title}`,
     "",
-    `Selected date: ${selectedDate}`,
+    `Export scope: ${selectedDate}`,
     `Included data: ${scope}`,
     "",
     "Please review this medication tracker data cautiously.",
@@ -123,6 +125,7 @@ export function entriesToChatGptPrompt(entries: DailyEntry[], selectedDate: stri
     "What I need back:",
     "- Plain-English patterns worth noticing",
     "- Possible links between sleep, grogginess, mood, anxiety, episodes, appetite, and side effects",
+    "- Whether things appear to be improving, staying broadly the same, or getting worse over time",
     "- Anything that may be useful to mention to a GP/prescriber",
     "- Questions to ask the doctor",
     "- Please avoid diagnosis or certainty; use careful language like 'may be worth watching'",

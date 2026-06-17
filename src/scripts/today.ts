@@ -1,6 +1,6 @@
 import { sections, todayString, createEntryId, mergeEntry, type DailyEntry } from "./schema";
 import { entriesToChatGptPrompt, renderField } from "./render";
-import { getAllEntries, getEntry, saveEntry, storageMode } from "./storage";
+import { getEntry, saveEntry, storageMode } from "./storage";
 
 const form = document.querySelector<HTMLFormElement>("#dailyForm")!;
 const dateInput = document.querySelector<HTMLInputElement>("#dateInput")!;
@@ -65,27 +65,18 @@ async function copyForChatGpt() {
   window.clearTimeout(saveTimer);
   copyChatGpt.disabled = true;
   copyStatus.textContent = "Preparing copy...";
+  let text = "";
 
   try {
     await saveNow();
-    const allEntries = await getAllEntries();
     const selectedDate = dateInput.value;
-    const recentEntries = allEntries
-      .filter((entry) => entry.date <= selectedDate)
-      .slice(0, 30);
-    const selectedEntry = allEntries.find((entry) => entry.date === selectedDate);
-    const entries = selectedEntry && !recentEntries.some((entry) => entry.date === selectedDate)
-      ? [selectedEntry, ...recentEntries]
-      : recentEntries;
-    const text = entriesToChatGptPrompt(entries.length ? entries : [currentEntry], selectedDate);
+    text = entriesToChatGptPrompt([currentEntry], `Selected day: ${selectedDate}`);
 
     await copyText(text);
     copyStatus.textContent = "Copied. Paste it into ChatGPT when you are ready.";
     copyFallback.hidden = true;
   } catch {
-    const allEntries = await getAllEntries();
-    const entries = allEntries.filter((entry) => entry.date <= dateInput.value).slice(0, 30);
-    const text = entriesToChatGptPrompt(entries.length ? entries : [currentEntry], dateInput.value);
+    if (!text) text = entriesToChatGptPrompt([currentEntry], `Selected day: ${dateInput.value}`);
     copyFallback.hidden = false;
     copyFallback.value = text;
     copyFallback.select();

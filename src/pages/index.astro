@@ -23,10 +23,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   <section class="copy-panel" aria-labelledby="copyTitle">
     <div>
-      <h2 id="copyTitle">ChatGPT analysis copy</h2>
-      <p>Copies the selected day plus recent entries with a prompt for cautious pattern notes and questions to raise with the doctor.</p>
+      <h2 id="copyTitle">ChatGPT day copy</h2>
+      <p>Copies everything saved for the selected date. If a day is backfilled later, choose that date first.</p>
     </div>
-    <button class="button" id="copyChatGpt" type="button">Copy for ChatGPT</button>
+    <button class="button" id="copyChatGpt" type="button">Copy this day for ChatGPT</button>
     <p class="copy-status" id="copyStatus" aria-live="polite"></p>
     <textarea id="copyFallback" class="copy-fallback" readonly hidden></textarea>
   </section>
