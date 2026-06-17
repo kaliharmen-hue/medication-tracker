@@ -75,7 +75,7 @@ export const sections: SectionDefinition[] = [
     fields: [
       { id: "medicationTaken", label: "Medication taken?", type: "select", options: ["Yes", "No", "Late"] },
       { id: "doseTaken", label: "Dose taken", type: "select", options: ["7.5mg", "15mg", "30mg", "45mg", "Other"] },
-      { id: "timeTaken", label: "Time taken", type: "time" }
+      { id: "timeTaken", label: "Time taken last night", type: "time" }
     ]
   },
   {
@@ -84,7 +84,7 @@ export const sections: SectionDefinition[] = [
     fields: [
       { id: "sleepQuality", label: "Sleep quality", type: "score", min: 0, max: 10 },
       { id: "morningGrogginess", label: "Morning grogginess", type: "score", min: 0, max: 10 },
-      { id: "nightmares", label: "Nightmares", type: "select", options: ["None", "Mild", "Moderate", "Severe"] },
+      { id: "nightmares", label: "Intense dreams", type: "select", options: ["None", "Mild", "Moderate", "Severe"] },
       { id: "nightWaking", label: "Woke during the night?", type: "select", options: ["No", "Once", "Multiple times"] }
     ]
   },

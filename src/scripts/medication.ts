@@ -18,7 +18,7 @@ const saveState = document.querySelector<HTMLElement>("#medicationSaveState")!;
 const reasonForStarting = document.querySelector<HTMLElement>("#reasonForStarting")!;
 const changeHistory = document.querySelector<HTMLElement>("#changeHistory")!;
 
-const reasonOptions = ["Depression", "Anxiety / agitation", "Sleep", "Nightmares", "Episodes / emotional dysregulation", "Other"];
+const reasonOptions = ["Depression", "Anxiety / agitation", "Sleep", "Intense dreams", "Episodes / emotional dysregulation", "Other"];
 let currentSetup = mergeMedicationSetup(null);
 let setupSaveTimer = 0;
 
