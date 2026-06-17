@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+  <section class="page-head compact">
+    <div>
+      <p class="eyebrow">Today</p>
+      <h1>Daily check-in</h1>
+      <p class="lede">Fill only what feels useful. Changes autosave as you go, with a separate space for Kali to add notes.</p>
+    </div>
+    <div class="save-state" id="saveState">Autosaves as I go</div>
+  </section>
+
+  <section class="control-strip" aria-label="Entry controls">
+    <label>
+      <span>Date</span>
+      <input id="dateInput" type="date" />
+    </label>
+    <a class="button ghost" id="exportLink" href="./export/">Export day</a>
+  </section>
+
+  <form id="dailyForm" class="daily-form"></form>
+
+  <section class="quiet-panel" id="syncPanel">
+    <h2>Shared saving</h2>
+    <p id="syncText">Checking save setup...</p>
+  </section>
+</BaseLayout>
+<script>
+  import "../scripts/today.ts";
+</script>

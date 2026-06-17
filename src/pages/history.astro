@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+  <section class="page-head">
+    <div>
+      <p class="eyebrow">History</p>
+      <h1>Recent rhythm</h1>
+      <p class="lede">A shared view of saved check-ins, one entry per day.</p>
+    </div>
+  </section>
+
+  <section class="control-strip">
+    <label>
+      <span>Month</span>
+      <input id="monthInput" type="month" />
+    </label>
+  </section>
+
+  <section class="history-grid" id="historyGrid"></section>
+</BaseLayout>
+<script>
+  import "../scripts/history.ts";
+</script>

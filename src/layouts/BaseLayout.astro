@@ -1,0 +1,59 @@
+---
+import "../styles/global.css";
+
+const title = "Keith Medication Tracker";
+const description = "A shared daily medication tracker with autosave.";
+const base = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+const nav = [
+  { href: base, label: "Today" },
+  { href: `${base}history/`, label: "History" },
+  { href: `${base}insights/`, label: "Insights" },
+  { href: `${base}export/`, label: "Export" }
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#315c52" />
+    <link rel="manifest" href={`${base}manifest.webmanifest`} />
+    <link rel="icon" href={`${base}icons/icon-192.svg`} />
+    <link rel="apple-touch-icon" href={`${base}icons/icon-192.svg`} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href={base} aria-label="Keith Medication Tracker home">
+          <span class="brand-mark">K</span>
+          <span>
+            <strong>Medication Tracker</strong>
+            <small>Shared daily check-in</small>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+      </header>
+      <main>
+        <slot />
+      </main>
+    </div>
+    <script>
+      const base = import.meta.env.BASE_URL.endsWith("/")
+        ? import.meta.env.BASE_URL
+        : `${import.meta.env.BASE_URL}/`;
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register(`${base}sw.js`).catch(() => {});
+        });
+      }
+    </script>
+  </body>
+</html>

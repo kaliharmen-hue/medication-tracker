@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+  <section class="page-head">
+    <div>
+      <p class="eyebrow">Insights</p>
+      <h1>Pattern board</h1>
+      <p class="lede">Cautious notes from recent entries. These are reminders for conversation, not medical conclusions.</p>
+    </div>
+  </section>
+
+  <section class="insight-board" id="insightBoard"></section>
+</BaseLayout>
+<script>
+  import "../scripts/insights.ts";
+</script>

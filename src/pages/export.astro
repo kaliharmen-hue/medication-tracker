@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+  <section class="page-head">
+    <div>
+      <p class="eyebrow">Export</p>
+      <h1>Copy, share, or back up</h1>
+      <p class="lede">Export selected days for ChatGPT, save a JSON backup, or import a backup later.</p>
+    </div>
+  </section>
+
+  <section class="control-strip">
+    <label>
+      <span>Date</span>
+      <input id="dateInput" type="date" />
+    </label>
+    <label>
+      <span>Month</span>
+      <input id="monthInput" type="month" />
+    </label>
+  </section>
+
+  <section class="action-grid">
+    <button class="button" id="copyDay" type="button">Copy selected day</button>
+    <button class="button" id="copyMonth" type="button">Copy month</button>
+    <button class="button ghost" id="downloadCsv" type="button">Download CSV</button>
+    <button class="button ghost" id="downloadJson" type="button">Download backup</button>
+    <label class="button ghost file-button">
+      Import backup
+      <input id="importJson" type="file" accept="application/json" />
+    </label>
+  </section>
+
+  <section class="preview-panel">
+    <div class="panel-title">
+      <h2>Preview</h2>
+      <button class="button subtle" id="selectPreview" type="button">Select text</button>
+    </div>
+    <textarea id="previewText" readonly></textarea>
+  </section>
+</BaseLayout>
+<script>
+  import "../scripts/export.ts";
+</script>

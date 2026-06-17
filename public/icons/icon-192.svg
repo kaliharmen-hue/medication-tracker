@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192" role="img" aria-label="Medication tracker icon">
+  <rect width="192" height="192" rx="32" fill="#315c52"/>
+  <path d="M48 116c0-30 20-54 48-54s48 24 48 54" fill="none" stroke="#f7f4ee" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="96" cy="80" r="18" fill="#f7f4ee"/>
+  <path d="M58 132h76" stroke="#dca66d" stroke-width="14" stroke-linecap="round"/>
+</svg>

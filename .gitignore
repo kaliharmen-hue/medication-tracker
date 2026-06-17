@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+*.log
+Keith_Mirtazapine_Medication_Tracker_Fields.md
+NEXT_TRACKER_BUILD_NOTES.md
