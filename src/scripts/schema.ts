@@ -49,8 +49,12 @@ export interface DailyEntry {
   morningGrogginess: number | "";
   nightmares: string;
   nightWaking: string;
-  daytimeEnergy: number | "";
-  mood: number | "";
+  morningEnergy: number | "";
+  afternoonEnergy: number | "";
+  morningMood: number | "";
+  afternoonMood: number | "";
+  daytimeEnergy?: number | "";
+  mood?: number | "";
   anxietyAgitation: number | "";
   tattooingToday: string;
   tattooConcentration: number | "";
@@ -91,8 +95,10 @@ export const sections: SectionDefinition[] = [
     id: "daytime",
     title: "Daytime",
     fields: [
-      { id: "daytimeEnergy", label: "Daytime energy", type: "score", min: 0, max: 10 },
-      { id: "mood", label: "Mood", type: "score", min: 0, max: 10 },
+      { id: "morningEnergy", label: "Morning energy", type: "score", min: 0, max: 10 },
+      { id: "afternoonEnergy", label: "Afternoon energy", type: "score", min: 0, max: 10 },
+      { id: "morningMood", label: "Morning mood", type: "score", min: 0, max: 10 },
+      { id: "afternoonMood", label: "Afternoon mood", type: "score", min: 0, max: 10 },
       { id: "anxietyAgitation", label: "Anxiety / agitation", type: "score", min: 0, max: 10 },
       { id: "tattooingToday", label: "Tattooing today?", type: "select", options: ["No", "Yes, 1-2 hours", "Yes, 3-4 hours", "Yes, 4+ hours"] },
       { id: "tattooConcentration", label: "Concentration for tattooing", type: "score", min: 0, max: 10 }
@@ -176,8 +182,10 @@ export function createEmptyEntry(date = todayString()): DailyEntry {
     morningGrogginess: "",
     nightmares: "",
     nightWaking: "",
-    daytimeEnergy: "",
-    mood: "",
+    morningEnergy: "",
+    afternoonEnergy: "",
+    morningMood: "",
+    afternoonMood: "",
     anxietyAgitation: "",
     tattooingToday: "",
     tattooConcentration: "",
@@ -198,6 +206,8 @@ export function createEmptyEntry(date = todayString()): DailyEntry {
 export function mergeEntry(saved: Partial<DailyEntry> | null | undefined, date: string): DailyEntry {
   const empty = createEmptyEntry(date);
   const merged = { ...empty, ...saved, date, id: createEntryId(date) };
+  if (merged.morningEnergy === "" && saved?.daytimeEnergy !== undefined) merged.morningEnergy = saved.daytimeEnergy;
+  if (merged.morningMood === "" && saved?.mood !== undefined) merged.morningMood = saved.mood;
   merged.sideEffects = Array.isArray(merged.sideEffects) ? merged.sideEffects : [];
   merged.warningDetails = Array.isArray(merged.warningDetails) ? merged.warningDetails : [];
   return merged;

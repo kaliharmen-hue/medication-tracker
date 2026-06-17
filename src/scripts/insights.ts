@@ -21,7 +21,10 @@ function renderInsights(entries: DailyEntry[]) {
     countCard("Current dose", latest.doseTaken || "Not set", latest.timeTaken ? `Usually logged at ${latest.timeTaken}.` : "Based on the latest saved entry."),
     averageCard("Sleep quality", entries.map((entry) => entry.sleepQuality), trendNote(entries, "sleepQuality", "sleep quality")),
     averageCard("Morning grogginess", entries.map((entry) => entry.morningGrogginess), "Higher scores may be worth comparing with dose time and sleep quality."),
-    averageCard("Mood", entries.map((entry) => entry.mood), trendNote(entries, "mood", "mood")),
+    averageCard("Morning energy", entries.map((entry) => entry.morningEnergy), trendNote(entries, "morningEnergy", "morning energy")),
+    averageCard("Afternoon energy", entries.map((entry) => entry.afternoonEnergy), trendNote(entries, "afternoonEnergy", "afternoon energy")),
+    averageCard("Morning mood", entries.map((entry) => entry.morningMood), trendNote(entries, "morningMood", "morning mood")),
+    averageCard("Afternoon mood", entries.map((entry) => entry.afternoonMood), trendNote(entries, "afternoonMood", "afternoon mood")),
     averageCard("Anxiety / agitation", entries.map((entry) => entry.anxietyAgitation), trendNote(entries, "anxietyAgitation", "anxiety / agitation")),
     averageCard("Tattoo concentration", entries.filter((entry) => entry.tattooingToday && entry.tattooingToday !== "No").map((entry) => entry.tattooConcentration), "Only includes days marked as tattooing days."),
     countCard("Tattooing days", String(entries.filter((entry) => entry.tattooingToday && entry.tattooingToday !== "No").length), "Days where tattooing time was logged."),
@@ -102,7 +105,7 @@ function buildDoctorNotes(entries: DailyEntry[], commonSideEffects: string) {
   if (commonSideEffects) notes.push(`Repeated side effects: ${commonSideEffects}.`);
   if (safetyFlags) notes.push(`${safetyFlags} safety flag(s) were recorded and should be discussed directly.`);
   if (!episodeDays && !moderateSevereSideEffects && !safetyFlags) notes.push("No episode days, safety flags, or moderate/severe side effects are recorded in this recent window.");
-  notes.push("Useful doctor question: does the dose timing or dose level fit the sleep, grogginess, mood, and side-effect pattern?");
+  notes.push("Useful doctor question: does the dose timing or dose level fit the sleep, grogginess, morning/afternoon energy, mood, and side-effect pattern?");
 
   return notes;
 }

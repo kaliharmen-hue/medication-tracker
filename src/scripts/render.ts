@@ -129,7 +129,7 @@ export function entriesToChatGptPrompt(
     "",
     "What I need back:",
     "- Plain-English patterns worth noticing",
-    "- Possible links between sleep, grogginess, mood, anxiety, tattooing/concentration, episodes, appetite, and side effects",
+    "- Possible links between sleep, grogginess, morning/afternoon energy, morning/afternoon mood, anxiety, tattooing/concentration, episodes, appetite, and side effects",
     "- Whether things appear to be improving, staying broadly the same, or getting worse over time",
     "- Anything that may be useful to mention to a GP/prescriber",
     "- Questions to ask the doctor",

@@ -34,7 +34,10 @@ function entryCard(entry: DailyEntry) {
   const flags = [
     entry.medicationTaken && `Medication: ${entry.medicationTaken}`,
     entry.sleepQuality !== "" && `Sleep ${entry.sleepQuality}/10`,
-    entry.mood !== "" && `Mood ${entry.mood}/10`,
+    entry.morningEnergy !== "" && `Morning energy ${entry.morningEnergy}/10`,
+    entry.afternoonEnergy !== "" && `Afternoon energy ${entry.afternoonEnergy}/10`,
+    entry.morningMood !== "" && `Morning mood ${entry.morningMood}/10`,
+    entry.afternoonMood !== "" && `Afternoon mood ${entry.afternoonMood}/10`,
     entry.anxietyAgitation !== "" && `Anxiety ${entry.anxietyAgitation}/10`,
     entry.tattooingToday && `Tattooing: ${entry.tattooingToday}`,
     entry.episodeToday === "Yes" && `Episode: ${entry.episodeSeverity || "Yes"}`,
