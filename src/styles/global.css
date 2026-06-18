@@ -267,14 +267,20 @@ legend {
 
 .range-row {
   display: grid;
-  grid-template-columns: 1fr minmax(74px, auto);
+  grid-template-columns: auto minmax(0, 1fr) auto minmax(74px, auto);
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 input[type="range"] {
   padding: 0;
   accent-color: var(--primary);
+}
+
+.range-bound {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 800;
 }
 
 .range-row.is-unset input[type="range"] {

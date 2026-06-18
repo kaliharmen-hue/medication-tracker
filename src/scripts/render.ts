@@ -21,6 +21,12 @@ export function renderField(field: FieldDefinition, entry: DailyEntry) {
     input.name = String(field.id);
     input.value = value === "" ? "5" : String(value);
     input.dataset.empty = value === "" ? "true" : "false";
+    const minLabel = document.createElement("span");
+    minLabel.className = "range-bound";
+    minLabel.textContent = input.min;
+    const maxLabel = document.createElement("span");
+    maxLabel.className = "range-bound";
+    maxLabel.textContent = input.max;
     const output = document.createElement("output");
     output.textContent = value === "" ? "Not set" : String(value);
     input.addEventListener("input", () => {
@@ -28,7 +34,7 @@ export function renderField(field: FieldDefinition, entry: DailyEntry) {
       row.classList.remove("is-unset");
       output.textContent = input.value;
     });
-    row.append(input, output);
+    row.append(minLabel, input, maxLabel, output);
     wrapper.append(row);
     if (field.optionalLabel) {
       const optional = document.createElement("button");
