@@ -12,7 +12,7 @@ export function renderField(field: FieldDefinition, entry: DailyEntry) {
 
   if (field.type === "score") {
     const row = document.createElement("div");
-    row.className = "range-row";
+    row.className = value === "" ? "range-row is-unset" : "range-row";
     const input = document.createElement("input");
     input.type = "range";
     input.min = String(field.min ?? 0);
@@ -25,6 +25,7 @@ export function renderField(field: FieldDefinition, entry: DailyEntry) {
     output.textContent = value === "" ? "Not set" : String(value);
     input.addEventListener("input", () => {
       input.dataset.empty = "false";
+      row.classList.remove("is-unset");
       output.textContent = input.value;
     });
     row.append(input, output);

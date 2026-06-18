@@ -277,10 +277,18 @@ input[type="range"] {
   accent-color: var(--primary);
 }
 
+.range-row.is-unset input[type="range"] {
+  opacity: 0.38;
+}
+
 output {
   color: var(--primary-dark);
   font-weight: 900;
   text-align: right;
+}
+
+.range-row.is-unset output {
+  color: var(--muted);
 }
 
 .chip-group,
